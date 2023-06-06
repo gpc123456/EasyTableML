@@ -39,7 +39,6 @@ class EasyTableMLRegression():
         knn = KNeighborsRegressor()
         ridge=Ridge()
         lasso=Lasso()
-        dtree=DecisionTreeRegressor()
         etree=ExtraTreeRegressor()
         rf=RandomForestRegressor()
         gb=GradientBoostingRegressor()
@@ -51,7 +50,6 @@ class EasyTableMLRegression():
             'knn':knn,
             'ridge':ridge,
             'lasso':lasso,
-            'dtree':dtree,
             'etree':etree,
             'rf':rf,
             'gb':gb,
@@ -79,10 +77,6 @@ class EasyTableMLRegression():
                 },
                 'lasso':{
                     'alpha':[0.001,0.01,0.1,1,3,5,7,10,50,100]
-                },
-                'dtree':{
-                    'min_samples_split':[i for i in range(2, 103,5)],
-                    'min_samples_leaf':[i for i in range(1, 1002,10)]
                 },
                 'etree':{
                     'splitter':['best'],
