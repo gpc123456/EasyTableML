@@ -2,9 +2,7 @@
 from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.linear_model import Ridge
-from sklearn.linear_model import Lasso
 from sklearn.neural_network import MLPRegressor
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.tree import ExtraTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import GradientBoostingRegressor
@@ -38,7 +36,6 @@ class EasyTableMLRegression():
         linear = LinearRegression()
         knn = KNeighborsRegressor()
         ridge=Ridge()
-        lasso=Lasso()
         etree=ExtraTreeRegressor()
         rf=RandomForestRegressor()
         gb=GradientBoostingRegressor()
@@ -49,7 +46,6 @@ class EasyTableMLRegression():
             'liner':linear,
             'knn':knn,
             'ridge':ridge,
-            'lasso':lasso,
             'etree':etree,
             'rf':rf,
             'gb':gb,
@@ -74,9 +70,6 @@ class EasyTableMLRegression():
                 'ridge':{
                     'alpha':[0.01,0.1,1,3,5,7,10,50,100,500,1000],
                     'solver':['svd','cholesky','lsqr','sparse_cg','sag','saga']
-                },
-                'lasso':{
-                    'alpha':[0.001,0.01,0.1,1,3,5,7,10,50,100]
                 },
                 'etree':{
                     'splitter':['best'],
