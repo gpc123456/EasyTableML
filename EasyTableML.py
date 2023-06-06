@@ -63,30 +63,24 @@ class EasyTableMLRegression():
                 },
                 'knn':{
                     'n_jobs':[-1],
-                    'n_neighbors':[i for i in range(1, 102 , 5)],
-                    'weights':['uniform','distance'],
-                    'p':[1,2]
+                    'n_neighbors':[5,10,20],
                 },
                 'ridge':{
-                    'alpha':[0.01,0.1,1,3,5,7,10,50,100,500,1000],
-                    'solver':['svd','cholesky','lsqr','sparse_cg','sag','saga']
+                    'alpha':[0.1,1,10],
                 },
                 'etree':{
                     'splitter':['best'],
-                    'min_samples_split':[i for i in range(2, 103,5)],
-                    'min_samples_leaf':[i for i in range(1, 1002,10)]
                 },
                 'rf':{
                     'n_jobs':[-1],
-                    'n_estimators':[i for i in range(1, 502 ,20)],
+                    'n_estimators':[10,100,500],
                 },
                 'gb':{
-                    'n_estimators':[i for i in range(1,502,20)],
-                    'learning_rate':[0.01,0.1,1],
+                    'n_estimators':[100,300,500],
                 },
                 'bag':{
                     'n_jobs':[-1],
-                    'n_estimators':[i for i in range(1,502,20)],
+                    'n_estimators':[10,100,300],
                 },
                 'lgbm':{
                     'n_jobs':[-1],
