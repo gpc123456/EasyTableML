@@ -268,7 +268,7 @@ class EasyTableMLRegression():
         return y_pred
     
     def fit(self,x_train,y_train,auto_scoring='r2',cv=3 ,n_jobs=1,details=1):
-        print('Start Auto Train! Leave it all to me!')
+        print('Start Auto Train! Leave it all to me 😊!')
         base_models=self.get_base_models()
         best_models=self.train(base_models,x_train,y_train,'base',cv=cv,auto_scoring=auto_scoring,n_jobs=n_jobs,details=details,auto_parameter=True)
         meta_learner=self.train(best_models,x_train,y_train,'meta',cv=cv,auto_scoring=auto_scoring,n_jobs=n_jobs,details=details,auto_parameter=True)
