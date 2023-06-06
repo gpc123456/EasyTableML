@@ -104,7 +104,7 @@ class EasyTableMLRegression():
         for i, (name, model) in enumerate(model_list.items()):
             print('Note(Auto Parameter):','We are currently searching the ',i+1," model's beat parameter, ",'model name: ',name)
             print('Plase Wait...')
-            grid_search=GridSearchCV(model,parameters[name],refit=True,cv=cv,scoring=auto_scoring,verbose=details+1,n_jobs=n_jobs)
+            grid_search=GridSearchCV(model,parameters[name],refit=True,cv=cv,scoring=auto_scoring,verbose=details,n_jobs=n_jobs)
             grid_search.fit(x_train,y_train)
             joblib.dump(grid_search.best_estimator_, os.path.join('models','AutoML',name+'.pkl'))
             print('Best model will be saved in:',os.path.join('models','AutoML',name+'.pkl'))
@@ -146,7 +146,7 @@ class EasyTableMLRegression():
                     }
                 else:
                     parameters=auto_custom_parameters
-                grid_search=GridSearchCV(StackingRegressor(estimators=list(model_list.items()),cv=3),parameters,refit=True,cv=5,scoring=auto_scoring,verbose=details+1,n_jobs=1)
+                grid_search=GridSearchCV(StackingRegressor(estimators=list(model_list.items()),cv=3),parameters,refit=True,cv=5,scoring=auto_scoring,verbose=details,n_jobs=1)
                 grid_search.fit(x_train,y_train)
                 meta_learner=grid_search.best_estimator_
                 joblib.dump(meta_learner, os.path.join('models','AutoML','meta_learner.pkl'))
