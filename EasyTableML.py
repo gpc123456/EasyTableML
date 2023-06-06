@@ -63,7 +63,7 @@ class EasyTableMLRegression():
                 },
                 'knn':{
                     'n_jobs':[-1],
-                    'n_neighbors':[5,10,20],
+                    'n_neighbors':[i for i in range(2,53,5)],
                 },
                 'ridge':{
                     'alpha':[0.1,1,10],
@@ -85,7 +85,7 @@ class EasyTableMLRegression():
                 'lgbm':{
                     'n_jobs':[-1],
                     'learning_rate':[0.01,0.03,0.05,0.07,0.09,0.1,1],
-                    'n_estimators':[i for i in range(1,502,10)]
+                    'n_estimators':[i for i in range(1,612,10)]
                 }
             }
         else:
@@ -135,6 +135,7 @@ class EasyTableMLRegression():
                             MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=0.1),
                             MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=1),
                             MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=10),
+                            RandomForestRegressor()
                         ],
                         'n_jobs':[-1]
                     }
