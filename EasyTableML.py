@@ -146,7 +146,7 @@ class EasyTableMLRegression():
                     }
                 else:
                     parameters=auto_custom_parameters
-                grid_search=TuneGridSearchCV(StackingRegressor(estimators=list(model_list.items()),cv=3),parameters,refit=True,cv=cv,scoring=auto_scoring,verbose=details,n_jobs=1)
+                grid_search=TuneGridSearchCV(StackingRegressor(estimators=list(model_list.items()),cv=3),parameters,refit=True,cv=5,scoring=auto_scoring,verbose=details,n_jobs=1)
                 grid_search.fit(x_train,y_train)
                 meta_learner=grid_search.best_estimator_
                 joblib.dump(meta_learner, os.path.join('models','AutoML','meta_learner.pkl'))
