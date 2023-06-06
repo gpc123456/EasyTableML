@@ -1,7 +1,6 @@
 #Load model
 from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.svm import SVR
 from sklearn.linear_model import Ridge
 from sklearn.neural_network import MLPRegressor
 from sklearn.tree import ExtraTreeRegressor
@@ -36,7 +35,6 @@ class EasyTableMLRegression():
     def get_base_models(self):  
         linear = LinearRegression()
         knn = KNeighborsRegressor()
-        svr=SVR()
         ridge=Ridge()
         etree=ExtraTreeRegressor()
         rf=RandomForestRegressor()
@@ -47,7 +45,6 @@ class EasyTableMLRegression():
         models={
             'liner':linear,
             'knn':knn,
-            'svm':svr,
             'ridge':ridge,
             'etree':etree,
             'rf':rf,
@@ -67,9 +64,6 @@ class EasyTableMLRegression():
                 'knn':{
                     'n_jobs':[-1],
                     'n_neighbors':[5,10,20],
-                },
-                'svm':{
-                    'gamma':['scale','auto']
                 },
                 'ridge':{
                     'alpha':[0.1,1,10],
