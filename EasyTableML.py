@@ -73,7 +73,7 @@ class EasyTableMLRegression():
                 },
                 'rf':{
                     'n_jobs':[-1],
-                    'n_estimators':[10,100,500],
+                    'n_estimators':[100,300,500],
                 },
                 'gb':{
                     'n_estimators':[100,300,500],
