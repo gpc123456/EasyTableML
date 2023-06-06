@@ -69,39 +69,37 @@ class EasyTableMLRegression():
                 },
                 'knn':{
                     'n_jobs':[-1],
-                    'n_neighbors':[i for i in range(1, 21)],
+                    'n_neighbors':[i for i in range(1, 102 , 5)],
                     'weights':['uniform','distance'],
                     'p':[1,2]
                 },
                 'ridge':{
-                    'alpha':[0.01,0.1,1,3,5,7,10,50,100],
+                    'alpha':[0.01,0.1,1,3,5,7,10,50,100,500,1000],
                     'solver':['svd','cholesky','lsqr','sparse_cg','sag','saga']
                 },
                 'lasso':{
-                    'alpha':[0.01,0.1,1,3,5,7,10,50,100]
+                    'alpha':[0.001,0.01,0.1,1,3,5,7,10,50,100]
                 },
                 'dtree':{
-                    'max_leaf_nodes':[i for i in range(50, 5000, 200)],
-                    'min_samples_split':[i for i in range(2, 103,10)],
-                    'min_samples_leaf':[i for i in range(1, 52,10)]
+                    'min_samples_split':[i for i in range(2, 103,5)],
+                    'min_samples_leaf':[i for i in range(1, 1002,10)]
                 },
                 'etree':{
                     'splitter':['best'],
-                    'max_leaf_nodes':[i for i in range(50, 5000,200)],
-                    'min_samples_split':[i for i in range(2, 103,10)],
-                    'min_samples_leaf':[i for i in range(1, 52,10)]
+                    'min_samples_split':[i for i in range(2, 103,5)],
+                    'min_samples_leaf':[i for i in range(1, 1002,10)]
                 },
                 'rf':{
                     'n_jobs':[-1],
-                    'n_estimators':[i for i in range(1, 302 ,5)],
+                    'n_estimators':[i for i in range(1, 502 ,20)],
                 },
                 'gb':{
-                    'n_estimators':[i for i in range(1,302,10)],
+                    'n_estimators':[i for i in range(1,502,20)],
                     'learning_rate':[0.01,0.1,1],
                 },
                 'bag':{
                     'n_jobs':[-1],
-                    'n_estimators':[i for i in range(1,252,5)],
+                    'n_estimators':[i for i in range(1,502,20)],
                 },
                 'lgbm':{
                     'n_jobs':[-1],
@@ -153,12 +151,9 @@ class EasyTableMLRegression():
                 if auto_custom_parameters == None:
                     parameters={
                         'final_estimator':[
-                            MLPRegressor(hidden_layer_sizes=(100,),max_iter=5000,alpha=0.1),
-                            MLPRegressor(hidden_layer_sizes=(100,),max_iter=5000,alpha=1),
-                            MLPRegressor(hidden_layer_sizes=(100,),max_iter=5000,alpha=10),
-                            MLPRegressor(hidden_layer_sizes=(30,50,10),max_iter=5000,alpha=0.1),
-                            MLPRegressor(hidden_layer_sizes=(30,50,10),max_iter=5000,alpha=1),
-                            MLPRegressor(hidden_layer_sizes=(30,50,10),max_iter=5000,alpha=10),
+                            MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=0.1),
+                            MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=1),
+                            MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=10),
                         ],
                         'n_jobs':[-1]
                     }
