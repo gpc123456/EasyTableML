@@ -84,8 +84,8 @@ class EasyTableMLRegression():
                 },
                 'lgbm':{
                     'n_jobs':[-1],
-                    'learning_rate':[0.001,0.01,0.1,0.5,1,1.5,2],
-                    'n_estimators':[i for i in range(1,502,2)]
+                    'learning_rate':[0.01,0.03,0.05,0.07,0.09,0.1,1],
+                    'n_estimators':[i for i in range(1,502,10)]
                 }
             }
         else:
