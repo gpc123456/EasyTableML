@@ -61,7 +61,7 @@ class EasyTableMLRegression():
                             x_train,
                             y_train,
                             auto_scoring='r2',
-                            cv=3,
+                            cv=5,
                             custom_parameters=None,
                             n_jobs=1,
                             details=1):
@@ -129,7 +129,7 @@ class EasyTableMLRegression():
               y_train,
               train_type,
               meta_model=None,
-              cv=3,
+              cv=5,
               auto_custom_parameters=None,
               n_jobs=1,
               auto_scoring='r2',
@@ -163,6 +163,8 @@ class EasyTableMLRegression():
                 print('Plase Wait...')
                 meta_learner = StackingRegressor(estimators=list(model_list.items()),
                                                  final_estimator=meta_model,
+                                                 cv=cv,
+                                                 verbose=details,
                                                  n_jobs=-1)
                 meta_learner.fit(x_train, y_train)
                 joblib.dump(meta_learner, os.path.join('models', 'meta_learner.pkl'))
@@ -170,11 +172,12 @@ class EasyTableMLRegression():
                 if auto_custom_parameters == None:
                     meta_learner = StackingRegressor(estimators=list(model_list.items()),
                                                      final_estimator=MLPRegressor(hidden_layer_sizes=(30, 100, 10),
-                                                                                  max_iter=5000,
-                                                                                  alpha=0.1),
-                                                     cv=5)
+                                                                                  max_iter=5000),
+                                                     cv=cv,
+                                                     verbose=details,
+                                                     n_jobs=-1).fit(x_train, y_train)
                 else:
-                    grid_search = GridSearchCV(StackingRegressor(estimators=list(model_list.items()), cv=5),
+                    grid_search = GridSearchCV(StackingRegressor(estimators=list(model_list.items(), n_jobs=-1), cv=5),
                                                auto_custom_parameters,
                                                refit=True,
                                                cv=cv,
@@ -306,7 +309,7 @@ class EasyTableMLRegression():
         y_pred = model.predict(x_pred)
         return y_pred
 
-    def fit(self, x_train, y_train, auto_scoring='r2', cv=3, n_jobs=1, details=1):
+    def fit(self, x_train, y_train, auto_scoring='r2', cv=5, n_jobs=1, details=1):
         print('Start Auto Train! Leave it all to me 😊!')
         base_models = self.get_base_models()
         best_models = self.train(base_models,
