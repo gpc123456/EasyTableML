@@ -130,20 +130,11 @@ class EasyTableMLRegression():
                 joblib.dump(meta_learner, os.path.join('models','meta_learner.pkl'))
             else:
                 if auto_custom_parameters == None:
-                    parameters={
-                        'final_estimator':[
-                            MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=0.1),
-                            MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=1),
-                            MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=10),
-                            RandomForestRegressor()
-                        ],
-                        'n_jobs':[-1]
-                    }
+                    meta_learner=StackingRegressor(estimators=list(model_list.items()),final_estimator=MLPRegressor(hidden_layer_sizes=(30,100,10),max_iter=5000,alpha=0.1),cv=5)
                 else:
-                    parameters=auto_custom_parameters
-                grid_search=GridSearchCV(StackingRegressor(estimators=list(model_list.items()),cv=5),parameters,refit=True,cv=cv,scoring=auto_scoring,verbose=details,n_jobs=n_jobs)
-                grid_search.fit(x_train,y_train)
-                meta_learner=grid_search.best_estimator_
+                    grid_search=GridSearchCV(StackingRegressor(estimators=list(model_list.items()),cv=5),auto_custom_parameters,refit=True,cv=cv,scoring=auto_scoring,verbose=details,n_jobs=n_jobs)
+                    grid_search.fit(x_train,y_train)
+                    meta_learner=grid_search.best_estimator_
                 joblib.dump(meta_learner, os.path.join('models','AutoML','meta_learner.pkl'))
             return meta_learner
 
