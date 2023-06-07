@@ -40,13 +40,17 @@ import seaborn as sns
 class EasyTableMLRegression():
 
     def auto_features(self, x_train, x_test, y_train, features_number=20, n_jobs=1):
+        '''
+        return : x_train, x_test, y_train
+        '''
         ofe = openfe()
         ofe.fit(data=x_train, label=y_train, n_jobs=n_jobs)
         x_train, x_test = transform(x_train, x_test, ofe.new_features_list[:features_number], n_jobs=n_jobs)
         ss = StandardScaler()
         x_train = ss.fit_transform(x_train)
         x_test = ss.transform(x_test)
-        return x_train, x_test
+        y_train = np.squeeze(np.array(y_train))
+        return x_train, x_test, y_train
 
     def get_base_models(self):
         linear = LinearRegression()
