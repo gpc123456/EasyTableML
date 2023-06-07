@@ -104,12 +104,16 @@ class EasyTableMLRegression():
                 },
                 'bag': {
                     'n_jobs': [-1],
-                    'n_estimators': [10, 100, 300],
+                    'n_estimators': [10, 100],
                 },
                 'lgbm': {
                     'n_jobs': [-1],
-                    'learning_rate': [0.01, 0.03, 0.05, 0.07, 0.09, 0.1, 1],
-                    'n_estimators': [i for i in range(1, 612, 10)]
+                    'learning_rate':
+                    np.around(
+                        np.concatenate(
+                            (np.arange(0.001, 0.01, 0.002), np.arange(0.01, 0.1, 0.01), np.arange(0.1, 1, 0.2)),
+                            axis=0), 3).tolist(),
+                    'n_estimators': [i for i in range(1, 612, 2)]
                 }
             }
         else:
