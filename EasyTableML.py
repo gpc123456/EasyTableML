@@ -87,7 +87,7 @@ class EasyTableMLRegression():
                 },
                 'knn': {
                     'n_jobs': [-1],
-                    'n_neighbors': [i for i in range(2, 53, 5)],
+                    'n_neighbors': [i for i in range(2, 100, 2)],
                 },
                 'ridge': {
                     'alpha': [0.1, 1, 10],
