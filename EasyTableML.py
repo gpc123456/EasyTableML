@@ -322,6 +322,7 @@ class EasyTableMLRegression():
                                  n_jobs=n_jobs,
                                  details=details,
                                  auto_parameter=True)
+        print("We are training the META model, please wait(It may take a long time)...")
         meta_learner = self.train(best_models,
                                   x_train,
                                   y_train,
@@ -331,5 +332,5 @@ class EasyTableMLRegression():
                                   n_jobs=n_jobs,
                                   details=details,
                                   auto_parameter=True)
-        print('All Done!')
+        print('All Done 👌!')
         return meta_learner
