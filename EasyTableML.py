@@ -201,6 +201,7 @@ class EasyTableMLRegression():
                 if auto_custom_parameters == None:
                     meta_learner = StackingRegressor(estimators=list(model_list.items()),
                                                      final_estimator=MLPRegressor(hidden_layer_sizes=(30, 100, 20),
+                                                                                  alpha=0.1,
                                                                                   max_iter=5000),
                                                      cv=cv,
                                                      verbose=details,
