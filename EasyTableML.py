@@ -16,6 +16,7 @@ import pandas as pd
 #Automatic parameter adjustment
 from sklearn.model_selection import GridSearchCV
 from sklearn.experimental import enable_halving_search_cv
+from sklearn.model_selection import HalvingGridSearchCV
 
 #Estimate model
 import sklearn.metrics as sm
