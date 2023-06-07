@@ -118,9 +118,9 @@ class EasyTableMLRegression():
                     'learning_rate':
                     np.around(
                         np.concatenate(
-                            (np.arange(0.001, 0.01, 0.002), np.arange(0.01, 0.1, 0.01), np.arange(0.1, 1, 0.2)),
+                            (np.arange(0.001, 0.01, 0.001), np.arange(0.01, 0.1, 0.01), np.arange(0.1, 1, 0.1)),
                             axis=0), 3).tolist(),
-                    'n_estimators': [i for i in range(1, 612, 2)]
+                    'n_estimators': [i for i in range(1, 1002, 2)]
                 }
             }
         else:
