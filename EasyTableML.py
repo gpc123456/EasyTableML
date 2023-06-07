@@ -91,13 +91,16 @@ class EasyTableMLRegression():
                 },
                 'knn': {
                     'n_jobs': [-1],
-                    'n_neighbors': [i for i in range(2, 102, 2)],
+                    'n_neighbors': [i for i in range(2, 103, 2)],
                 },
                 'ridge': {
-                    'alpha': [0.1, 1, 10],
+                    'alpha':[0.01,0.1,1,3,5,7,10,50,100],
+                    'solver':['svd','cholesky','lsqr','sparse_cg','sag','saga']
                 },
                 'etree': {
-                    'splitter': ['best'],
+                    'splitter': ['best','random'],
+                    'min_samples_split':[i for i in range(2, 203,5)],
+                    'min_samples_leaf':[i for i in range(1, 102,5)]
                 },
                 'rf': {
                     'n_jobs': [-1],
