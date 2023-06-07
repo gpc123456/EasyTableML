@@ -12,7 +12,6 @@ import lightgbm as lgb_model
 #Data Process
 import numpy as np
 import pandas as pd
-import math
 
 #Automatic parameter adjustment
 from sklearn.model_selection import GridSearchCV
