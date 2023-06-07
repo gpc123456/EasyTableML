@@ -16,6 +16,7 @@ import math
 
 #Automatic parameter adjustment
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import HalvingGridSearchCV
 
 #Estimate model
 import sklearn.metrics as sm
@@ -109,13 +110,13 @@ class EasyTableMLRegression():
             print('Note(Auto Parameter):', 'We are currently searching the ', i + 1, " model's beat parameter, ",
                   'model name: ', name)
             print('Plase Wait...')
-            grid_search = GridSearchCV(model,
-                                       parameters[name],
-                                       refit=True,
-                                       cv=cv,
-                                       scoring=auto_scoring,
-                                       verbose=details,
-                                       n_jobs=n_jobs)
+            grid_search = HalvingGridSearchCV(model,
+                                              parameters[name],
+                                              refit=True,
+                                              cv=cv,
+                                              scoring=auto_scoring,
+                                              verbose=details,
+                                              n_jobs=n_jobs)
             grid_search.fit(x_train, y_train)
             joblib.dump(grid_search.best_estimator_, os.path.join('models', 'AutoML', name + '.pkl'))
             print('Best model will be saved in:', os.path.join('models', 'AutoML', name + '.pkl'))
@@ -171,7 +172,7 @@ class EasyTableMLRegression():
             else:
                 if auto_custom_parameters == None:
                     meta_learner = StackingRegressor(estimators=list(model_list.items()),
-                                                     final_estimator=MLPRegressor(hidden_layer_sizes=(30, 100, 10),
+                                                     final_estimator=MLPRegressor(hidden_layer_sizes=(30, 100, 20),
                                                                                   max_iter=5000),
                                                      cv=cv,
                                                      verbose=details,
