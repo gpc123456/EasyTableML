@@ -124,7 +124,7 @@ class EasyTableMLRegression():
                         np.concatenate(
                             (np.arange(0.001, 0.01, 0.001), np.arange(0.01, 0.1, 0.01), np.arange(0.1, 1, 0.1)),
                             axis=0), 3).tolist(),
-                    'n_estimators': [i for i in range(1, 1002, 2)]
+                    'n_estimators': [i for i in range(1, 652, 2)]
                 }
             }
         else:
@@ -194,7 +194,7 @@ class EasyTableMLRegression():
                                                  final_estimator=meta_model,
                                                  cv=cv,
                                                  verbose=details,
-                                                 n_jobs=-1)
+                                                 n_jobs=n_jobs)
                 meta_learner.fit(x_train, y_train)
                 joblib.dump(meta_learner, os.path.join('models', 'meta_learner.pkl'))
             else:
@@ -204,7 +204,7 @@ class EasyTableMLRegression():
                                                                                   max_iter=5000),
                                                      cv=cv,
                                                      verbose=details,
-                                                     n_jobs=-1).fit(x_train, y_train)
+                                                     n_jobs=n_jobs).fit(x_train, y_train)
                 else:
                     grid_search = GridSearchCV(StackingRegressor(estimators=list(model_list.items(), n_jobs=-1), cv=5),
                                                auto_custom_parameters,
