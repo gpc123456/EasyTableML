@@ -104,10 +104,10 @@ class EasyTableMLRegression():
                 },
                 'rf': {
                     'n_jobs': [-1],
-                    'n_estimators': [100, 300],
+                    'n_estimators': [100],
                 },
                 'gb': {
-                    'n_estimators': [100, 300],
+                    'n_estimators': [100],
                 },
                 'bag': {
                     'n_jobs': [-1],
