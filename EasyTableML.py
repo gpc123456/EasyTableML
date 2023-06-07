@@ -91,13 +91,14 @@ class EasyTableMLRegression():
                 },
                 'knn': {
                     'n_jobs': [-1],
-                    'n_neighbors': [i for i in range(2, 103, 2)],
+                    'n_neighbors': [i for i in range(2, 203, 1)],
                 },
                 'ridge': {
-                    'alpha': np.around(
-                        np.concatenate(
-                            (np.arange(0.001, 0.01, 0.002), np.arange(0.01, 0.1, 0.01), np.arange(0.1, 1, 0.1),np.arange(1, 100, 2)),
-                            axis=0), 3).tolist(),
+                    'alpha':
+                    np.around(
+                        np.concatenate((np.arange(0.001, 0.01, 0.002), np.arange(0.01, 0.1, 0.01), np.arange(
+                            0.1, 1, 0.1), np.arange(1, 100, 2)),
+                                       axis=0), 3).tolist(),
                     'solver': ['svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga']
                 },
                 'etree': {
