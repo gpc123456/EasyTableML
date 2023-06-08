@@ -73,12 +73,14 @@ class EasyTableMLRegression():
                 },
                 'lgbm': {
                     'n_jobs': [-1],
-                    'learning_rate':
-                    np.around(
-                        np.concatenate(
-                            (np.arange(0.001, 0.01, 0.001), np.arange(0.01, 0.1, 0.01), np.arange(0.1, 1, 0.1)),
-                            axis=0), 3).tolist(),
-                    'n_estimators': [i for i in range(1, 652, 2)]
+                    'learning_rate': np.around(np.arange(0.05, 0.21, 0.01), 2).tolist(),
+                    'n_estimators': [i for i in range(1, 1002, 2)],
+                    'max_depth': [2, 3, 4, 5, 6],
+                    'num_leaves': [i for i in range(3, 65, 1)],
+                    'subsample': [0.8, 0.9, 1.0],
+                    'colsample_bytree': [0.8, 0.9, 1.0],
+                    'reg_alpha': [i for i in range(0, 1001, 1)],
+                    'reg_lambda': [i for i in range(0, 1001, 1)]
                 }
             }
         else:
