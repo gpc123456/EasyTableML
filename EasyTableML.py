@@ -1,12 +1,6 @@
 #Load model
-from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.linear_model import Ridge
 from sklearn.neural_network import MLPRegressor
-from sklearn.tree import ExtraTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.ensemble import BaggingRegressor
 import lightgbm as lgb_model
 
 #Data Process
@@ -53,23 +47,11 @@ class EasyTableMLRegression():
         return x_train, x_test, y_train
 
     def get_base_models(self):
-        linear = LinearRegression()
         knn = KNeighborsRegressor()
-        ridge = Ridge()
-        etree = ExtraTreeRegressor()
-        rf = RandomForestRegressor()
-        gb = GradientBoostingRegressor()
-        bag = BaggingRegressor()
         lgbm = lgb_model.sklearn.LGBMRegressor()
 
         models = {
-            'liner': linear,
             'knn': knn,
-            'ridge': ridge,
-            'etree': etree,
-            'rf': rf,
-            'gb': gb,
-            'bag': bag,
             'lgbm': lgbm,
         }
         return models
@@ -85,37 +67,9 @@ class EasyTableMLRegression():
                             details=1):
         if custom_parameters == None:
             parameters = {
-                'liner': {
-                    'n_jobs': [-1],
-                    'fit_intercept': [False, True]
-                },
                 'knn': {
                     'n_jobs': [-1],
                     'n_neighbors': [i for i in range(2, 203, 1)],
-                },
-                'ridge': {
-                    'alpha':
-                    np.around(
-                        np.concatenate((np.arange(0.001, 0.01, 0.002), np.arange(0.01, 0.1, 0.01), np.arange(
-                            0.1, 1, 0.1), np.arange(1, 100, 2)),
-                                       axis=0), 3).tolist(),
-                    'solver': ['svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga']
-                },
-                'etree': {
-                    'splitter': ['best', 'random'],
-                    'min_samples_split': [i for i in range(2, 503, 5)],
-                    'min_samples_leaf': [i for i in range(1, 502, 5)]
-                },
-                'rf': {
-                    'n_jobs': [-1],
-                    'n_estimators': [10, 100],
-                },
-                'gb': {
-                    'n_estimators': [10, 100, 300, 500],
-                },
-                'bag': {
-                    'n_jobs': [-1],
-                    'n_estimators': [10, 100],
                 },
                 'lgbm': {
                     'n_jobs': [-1],
