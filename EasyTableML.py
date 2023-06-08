@@ -73,29 +73,29 @@ class EasyTableMLRegression():
         lbgm_model.fit(x_train, y_train)
         lbgm_model = lbgm_model.best_estimator_
 
-        #Stage two:
+        #Stage two
         print('Stage 2 of 5')
-        parameters_stage_two = {'max_depth': [2, 3, 4, 5, 6, 7], 'num_leaves': [i for i in range(3, 128, 1)]}
-        lbgm_model = HalvingGridSearchCV(lbgm_model,
-                                         parameters_stage_two,
-                                         refit=True,
-                                         cv=cv,
-                                         scoring=auto_scoring,
-                                         verbose=details,
-                                         n_jobs=n_jobs)
+        parameters_stage_two = {'min_child_samples': [i for i in range(10, 200, 1)]}
+        lbgm_model = GridSearchCV(lbgm_model,
+                                  parameters_stage_two,
+                                  refit=True,
+                                  cv=cv,
+                                  scoring=auto_scoring,
+                                  verbose=details,
+                                  n_jobs=n_jobs)
         lbgm_model.fit(x_train, y_train)
         lbgm_model = lbgm_model.best_estimator_
 
-        #Stage three
+        #Stage three:
         print('Stage 3 of 5')
-        parameters_stage_three = {'min_child_samples': [i for i in range(10, 500, 1)]}
-        lbgm_model = HalvingGridSearchCV(lbgm_model,
-                                         parameters_stage_three,
-                                         refit=True,
-                                         cv=cv,
-                                         scoring=auto_scoring,
-                                         verbose=details,
-                                         n_jobs=n_jobs)
+        parameters_stage_three = {'max_depth': [2, 3, 4, 5, 6, 7], 'num_leaves': [i for i in range(3, 128, 1)]}
+        lbgm_model = GridSearchCV(lbgm_model,
+                                  parameters_stage_three,
+                                  refit=True,
+                                  cv=cv,
+                                  scoring=auto_scoring,
+                                  verbose=details,
+                                  n_jobs=n_jobs)
         lbgm_model.fit(x_train, y_train)
         lbgm_model = lbgm_model.best_estimator_
 
@@ -105,21 +105,21 @@ class EasyTableMLRegression():
             'subsample': [0.8, 0.9, 1.0],
             'colsample_bytree': [0.8, 0.9, 1.0],
         }
-        lbgm_model = HalvingGridSearchCV(lbgm_model,
-                                         parameters_stage_four,
-                                         refit=True,
-                                         cv=cv,
-                                         scoring=auto_scoring,
-                                         verbose=details,
-                                         n_jobs=n_jobs)
+        lbgm_model = GridSearchCV(lbgm_model,
+                                  parameters_stage_four,
+                                  refit=True,
+                                  cv=cv,
+                                  scoring=auto_scoring,
+                                  verbose=details,
+                                  n_jobs=n_jobs)
         lbgm_model.fit(x_train, y_train)
         lbgm_model = lbgm_model.best_estimator_
 
         #Stage five:
         print('Stage 5 of 5')
         parameters_stage_five = {
-            'reg_alpha': [i for i in range(0, 1001, 2)],
-            'reg_lambda': [i for i in range(0, 1001, 2)]
+            'reg_alpha': [1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0],
+            'reg_lambda': [1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.4, 0.6, 0.7, 0.9, 1.0]
         }
         lbgm_model = HalvingGridSearchCV(lbgm_model,
                                          parameters_stage_five,
