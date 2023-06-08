@@ -56,6 +56,82 @@ class EasyTableMLRegression():
         }
         return models
 
+    def auto_parameter_lgbm(self, lbgm_model, x_train, y_train, auto_scoring='r2', cv=5, n_jobs=1, details=1):
+        #Stage one:
+        print('Stage 1 of 5')
+        parameters_stage_one = {
+            'learning_rate': np.around(np.arange(0.05, 0.21, 0.01), 2).tolist(),
+            'n_estimators': [i for i in range(1, 1002, 2)]
+        }
+        lbgm_model = HalvingGridSearchCV(lbgm_model,
+                                         parameters_stage_one,
+                                         refit=True,
+                                         cv=cv,
+                                         scoring=auto_scoring,
+                                         verbose=details,
+                                         n_jobs=n_jobs)
+        lbgm_model.fit(x_train, y_train)
+        lbgm_model = lbgm_model.best_estimator_
+
+        #Stage two:
+        print('Stage 2 of 5')
+        parameters_stage_two = {'max_depth': [2, 3, 4, 5, 6, 7], 'num_leaves': [i for i in range(3, 128, 1)]}
+        lbgm_model = HalvingGridSearchCV(lbgm_model,
+                                         parameters_stage_two,
+                                         refit=True,
+                                         cv=cv,
+                                         scoring=auto_scoring,
+                                         verbose=details,
+                                         n_jobs=n_jobs)
+        lbgm_model.fit(x_train, y_train)
+        lbgm_model = lbgm_model.best_estimator_
+
+        #Stage three
+        print('Stage 3 of 5')
+        parameters_stage_three = {'min_child_sample': [i for i in range(10, 500, 1)]}
+        lbgm_model = HalvingGridSearchCV(lbgm_model,
+                                         parameters_stage_three,
+                                         refit=True,
+                                         cv=cv,
+                                         scoring=auto_scoring,
+                                         verbose=details,
+                                         n_jobs=n_jobs)
+        lbgm_model.fit(x_train, y_train)
+        lbgm_model = lbgm_model.best_estimator_
+
+        #Stage four:
+        print('Stage 4 of 5')
+        parameters_stage_four = {
+            'subsample': [0.8, 0.9, 1.0],
+            'colsample_bytree': [0.8, 0.9, 1.0],
+        }
+        lbgm_model = HalvingGridSearchCV(lbgm_model,
+                                         parameters_stage_four,
+                                         refit=True,
+                                         cv=cv,
+                                         scoring=auto_scoring,
+                                         verbose=details,
+                                         n_jobs=n_jobs)
+        lbgm_model.fit(x_train, y_train)
+        lbgm_model = lbgm_model.best_estimator_
+
+        #Stage five:
+        print('Stage 5 of 5')
+        parameters_stage_five = {
+            'reg_alpha': [i for i in range(0, 1001, 2)],
+            'reg_lambda': [i for i in range(0, 1001, 2)]
+        }
+        lbgm_model = HalvingGridSearchCV(lbgm_model,
+                                         parameters_stage_five,
+                                         refit=True,
+                                         cv=cv,
+                                         scoring=auto_scoring,
+                                         verbose=details,
+                                         n_jobs=n_jobs)
+        lbgm_model.fit(x_train, y_train)
+        lbgm_model = lbgm_model.best_estimator_
+        return lbgm_model
+
     def base_auto_parameter(self,
                             model_list,
                             x_train,
@@ -70,17 +146,6 @@ class EasyTableMLRegression():
                 'knn': {
                     'n_jobs': [-1],
                     'n_neighbors': [i for i in range(2, 203, 1)],
-                },
-                'lgbm': {
-                    'n_jobs': [-1],
-                    'learning_rate': np.around(np.arange(0.05, 0.21, 0.01), 2).tolist(),
-                    'n_estimators': [i for i in range(1, 1002, 2)],
-                    'max_depth': [2, 3, 4, 5, 6],
-                    'num_leaves': [i for i in range(3, 65, 1)],
-                    'subsample': [0.8, 0.9, 1.0],
-                    'colsample_bytree': [0.8, 0.9, 1.0],
-                    'reg_alpha': [i for i in range(0, 1001, 1)],
-                    'reg_lambda': [i for i in range(0, 1001, 1)]
                 }
             }
         else:
@@ -94,14 +159,23 @@ class EasyTableMLRegression():
             print('Note(Auto Parameter):', 'We are currently searching the ', i + 1, " model's beat parameter, ",
                   'model name: ', name)
             print('Plase Wait...')
-            grid_search = HalvingGridSearchCV(model,
-                                              parameters[name],
-                                              refit=True,
-                                              cv=cv,
-                                              scoring=auto_scoring,
-                                              verbose=details,
-                                              n_jobs=n_jobs)
-            grid_search.fit(x_train, y_train)
+            if type(model) == type(lgb_model.sklearn.LGBMRegressor()) and custom_parameters == None:
+                grid_search = self.auto_parameter_lgbm(model,
+                                                       x_train,
+                                                       y_train,
+                                                       auto_scoring=auto_scoring,
+                                                       cv=cv,
+                                                       n_jobs=n_jobs,
+                                                       details=details)
+            else:
+                grid_search = HalvingGridSearchCV(model,
+                                                  parameters[name],
+                                                  refit=True,
+                                                  cv=cv,
+                                                  scoring=auto_scoring,
+                                                  verbose=details,
+                                                  n_jobs=n_jobs)
+                grid_search.fit(x_train, y_train)
             joblib.dump(grid_search.best_estimator_, os.path.join('models', 'AutoML', name + '.pkl'))
             print('Best model will be saved in:', os.path.join('models', 'AutoML', name + '.pkl'))
             best_models[name] = grid_search.best_estimator_
