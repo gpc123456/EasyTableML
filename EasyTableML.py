@@ -88,7 +88,7 @@ class EasyTableMLRegression():
 
         #Stage three
         print('Stage 3 of 5')
-        parameters_stage_three = {'min_child_sample': [i for i in range(10, 500, 1)]}
+        parameters_stage_three = {'min_child_samples': [i for i in range(10, 500, 1)]}
         lbgm_model = HalvingGridSearchCV(lbgm_model,
                                          parameters_stage_three,
                                          refit=True,
