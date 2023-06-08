@@ -118,8 +118,8 @@ class EasyTableMLRegression():
         #Stage five:
         print('Stage 5 of 5')
         parameters_stage_five = {
-            'reg_alpha': [1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0],
-            'reg_lambda': [1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.4, 0.6, 0.7, 0.9, 1.0]
+            'reg_alpha': [0, 1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0],
+            'reg_lambda': [0, 1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.4, 0.6, 0.7, 0.9, 1.0]
         }
         lbgm_model = GridSearchCV(lbgm_model,
                                   parameters_stage_five,
