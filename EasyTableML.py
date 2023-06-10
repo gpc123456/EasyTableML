@@ -2,6 +2,7 @@
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 import lightgbm as lgb_model
+from catboost import CatBoostRegressor, Pool
 
 #Data Process
 import numpy as np
@@ -49,11 +50,9 @@ class EasyTableMLRegression():
     def get_base_models(self):
         knn = KNeighborsRegressor()
         lgbm = lgb_model.sklearn.LGBMRegressor()
+        catboost = CatBoostRegressor()
 
-        models = {
-            'knn': knn,
-            'lgbm': lgbm,
-        }
+        models = {'knn': knn, 'lgbm': lgbm, 'catboost': catboost}
         return models
 
     def auto_parameter_lgbm(self, lbgm_model, x_train, y_train, auto_scoring='r2', cv=5, n_jobs=1, details=1):
@@ -146,6 +145,11 @@ class EasyTableMLRegression():
                 'knn': {
                     'n_jobs': [-1],
                     'n_neighbors': [i for i in range(2, 103, 1)],
+                },
+                'catboost': {
+                    'learning_rate': [0.01, 0.05, 0.1],
+                    'depth': [4, 5, 6, 7, 8, 9, 10],
+                    'l2_leaf_reg':[0,0.1,1,3,5,10]
                 }
             }
         else:
