@@ -149,8 +149,8 @@ class EasyTableMLRegression():
                 'catboost': {
                     'learning_rate': [0.01, 0.05, 0.1],
                     'depth': [4, 5, 6, 7, 8, 9, 10],
-                    'l2_leaf_reg':[0,0.1,1,3,5,10]
-                }
+                    'l2_leaf_reg': [0, 0.1, 1, 3, 5, 10]
+                },
             }
         else:
             parameters = custom_parameters
