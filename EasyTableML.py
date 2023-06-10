@@ -76,13 +76,13 @@ class EasyTableMLRegression():
         #Stage two
         print('Stage 2 of 5')
         parameters_stage_two = {'min_child_samples': [i for i in range(10, 200, 1)]}
-        lbgm_model = GridSearchCV(lbgm_model,
-                                  parameters_stage_two,
-                                  refit=True,
-                                  cv=cv,
-                                  scoring=auto_scoring,
-                                  verbose=details,
-                                  n_jobs=n_jobs)
+        lbgm_model = HalvingGridSearchCV(lbgm_model,
+                                         parameters_stage_two,
+                                         refit=True,
+                                         cv=cv,
+                                         scoring=auto_scoring,
+                                         verbose=details,
+                                         n_jobs=n_jobs)
         lbgm_model.fit(x_train, y_train)
         lbgm_model = lbgm_model.best_estimator_
 
@@ -121,13 +121,13 @@ class EasyTableMLRegression():
             'reg_alpha': [0, 1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0],
             'reg_lambda': [0, 1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.4, 0.6, 0.7, 0.9, 1.0]
         }
-        lbgm_model = GridSearchCV(lbgm_model,
-                                  parameters_stage_five,
-                                  refit=True,
-                                  cv=cv,
-                                  scoring=auto_scoring,
-                                  verbose=details,
-                                  n_jobs=n_jobs)
+        lbgm_model = HalvingGridSearchCV(lbgm_model,
+                                         parameters_stage_five,
+                                         refit=True,
+                                         cv=cv,
+                                         scoring=auto_scoring,
+                                         verbose=details,
+                                         n_jobs=n_jobs)
         lbgm_model.fit(x_train, y_train)
         lbgm_model = lbgm_model.best_estimator_
         return lbgm_model
@@ -176,7 +176,7 @@ class EasyTableMLRegression():
                                                   verbose=details,
                                                   n_jobs=n_jobs)
                 grid_search.fit(x_train, y_train)
-                grid_search=grid_search.best_estimator_
+                grid_search = grid_search.best_estimator_
             joblib.dump(grid_search, os.path.join('models', 'AutoML', name + '.pkl'))
             print('Best model will be saved in:', os.path.join('models', 'AutoML', name + '.pkl'))
             best_models[name] = grid_search
