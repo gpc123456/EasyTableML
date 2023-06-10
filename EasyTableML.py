@@ -145,7 +145,7 @@ class EasyTableMLRegression():
             parameters = {
                 'knn': {
                     'n_jobs': [-1],
-                    'n_neighbors': [i for i in range(2, 203, 1)],
+                    'n_neighbors': [i for i in range(2, 103, 1)],
                 }
             }
         else:
