@@ -176,9 +176,10 @@ class EasyTableMLRegression():
                                                   verbose=details,
                                                   n_jobs=n_jobs)
                 grid_search.fit(x_train, y_train)
-            joblib.dump(grid_search.best_estimator_, os.path.join('models', 'AutoML', name + '.pkl'))
+                grid_search=grid_search.best_estimator_
+            joblib.dump(grid_search, os.path.join('models', 'AutoML', name + '.pkl'))
             print('Best model will be saved in:', os.path.join('models', 'AutoML', name + '.pkl'))
-            best_models[name] = grid_search.best_estimator_
+            best_models[name] = grid_search
         print('Auto Parameter Done!')
         return best_models
 
