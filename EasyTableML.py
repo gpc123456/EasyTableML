@@ -4,7 +4,6 @@ from sklearn.neural_network import MLPRegressor
 import lightgbm as lgb_model
 from catboost import CatBoostRegressor, Pool
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import LinearRegression
 
 #Data Process
 import numpy as np
