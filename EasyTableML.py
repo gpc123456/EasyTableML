@@ -3,6 +3,8 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 import lightgbm as lgb_model
 from catboost import CatBoostRegressor, Pool
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression
 
 #Data Process
 import numpy as np
@@ -50,7 +52,7 @@ class EasyTableMLRegression():
     def get_base_models(self):
         knn = KNeighborsRegressor()
         lgbm = lgb_model.sklearn.LGBMRegressor()
-        catboost = CatBoostRegressor()
+        catboost = CatBoostRegressor(verbose=0)
 
         models = {'knn': knn, 'lgbm': lgbm, 'catboost': catboost}
         return models
@@ -117,8 +119,8 @@ class EasyTableMLRegression():
         #Stage five:
         print('Stage 5 of 5')
         parameters_stage_five = {
-            'reg_alpha': [0, 1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0],
-            'reg_lambda': [0, 1e-5, 1e-3, 1e-1, 0.0, 0.1, 0.4, 0.6, 0.7, 0.9, 1.0]
+            'reg_alpha': [0, 1e-5, 1e-3, 1e-1, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0, 10],
+            'reg_lambda': [0, 1e-5, 1e-3, 1e-1, 0.1, 0.4, 0.6, 0.7, 0.9, 1.0, 10]
         }
         lbgm_model = HalvingGridSearchCV(lbgm_model,
                                          parameters_stage_five,
@@ -148,7 +150,7 @@ class EasyTableMLRegression():
                 },
                 'catboost': {
                     'learning_rate': [0.01, 0.05, 0.1],
-                    'depth': [4, 5, 6, 7, 8, 9, 10],
+                    'depth': [6, 7, 8, 9, 10],
                     'l2_leaf_reg': [0, 0.1, 1, 3, 5, 10]
                 },
             }
@@ -228,21 +230,50 @@ class EasyTableMLRegression():
                 meta_learner = StackingRegressor(estimators=list(model_list.items()),
                                                  final_estimator=meta_model,
                                                  cv=cv,
+                                                 passthrough=True,
                                                  verbose=details,
                                                  n_jobs=n_jobs)
                 meta_learner.fit(x_train, y_train)
                 joblib.dump(meta_learner, os.path.join('models', 'meta_learner.pkl'))
             else:
                 if auto_custom_parameters == None:
-                    meta_learner = StackingRegressor(estimators=list(model_list.items()),
+                    meta_learner_L1_1 = StackingRegressor(estimators=list(model_list.items()),
+                                                          final_estimator=MLPRegressor(hidden_layer_sizes=(30, 100, 20),
+                                                                                       alpha=0.1,
+                                                                                       max_iter=5000),
+                                                          cv=cv,
+                                                          passthrough=True,
+                                                          verbose=details,
+                                                          n_jobs=n_jobs)
+                    meta_learner_L1_2 = StackingRegressor(estimators=list(model_list.items()),
+                                                          final_estimator=RandomForestRegressor(n_jobs=-1),
+                                                          cv=cv,
+                                                          passthrough=True,
+                                                          verbose=details,
+                                                          n_jobs=n_jobs)
+                    meta_learner_L1_3 = StackingRegressor(estimators=list(model_list.items()),
+                                                          final_estimator=KNeighborsRegressor(),
+                                                          cv=cv,
+                                                          passthrough=True,
+                                                          verbose=details,
+                                                          n_jobs=n_jobs)
+                    meta_learner_L1 = [('L1_1', meta_learner_L1_1), ('L1_2', meta_learner_L1_2),
+                                       ('L1_3', meta_learner_L1_3)]
+                    print("Training final META learner...")
+                    meta_learner = StackingRegressor(estimators=meta_learner_L1,
                                                      final_estimator=MLPRegressor(hidden_layer_sizes=(30, 100, 20),
-                                                                                  alpha=0.1,
+                                                                                  alpha=1,
                                                                                   max_iter=5000),
                                                      cv=cv,
                                                      verbose=details,
                                                      n_jobs=n_jobs).fit(x_train, y_train)
                 else:
-                    grid_search = GridSearchCV(StackingRegressor(estimators=list(model_list.items(), n_jobs=-1), cv=5),
+                    grid_search = GridSearchCV(StackingRegressor(estimators=list(
+                        model_list.items(),
+                        passthrough=True,
+                        n_jobs=-1,
+                    ),
+                                                                 cv=5),
                                                auto_custom_parameters,
                                                refit=True,
                                                cv=cv,
