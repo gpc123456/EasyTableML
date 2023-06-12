@@ -118,8 +118,8 @@ class EasyTableMLRegression():
         #Stage five:
         print('Stage 5 of 5')
         parameters_stage_five = {
-            'reg_alpha': [0, 1e-5, 1e-3, 1e-1, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0, 10],
-            'reg_lambda': [0, 1e-5, 1e-3, 1e-1, 0.1, 0.4, 0.6, 0.7, 0.9, 1.0, 10]
+            'reg_alpha': [0, 1e-5, 1e-3, 1e-1, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0],
+            'reg_lambda': [0, 1e-5, 1e-3, 1e-1, 0.1, 0.4, 0.6, 0.7, 0.9, 1.0]
         }
         lbgm_model = HalvingGridSearchCV(lbgm_model,
                                          parameters_stage_five,
@@ -267,11 +267,9 @@ class EasyTableMLRegression():
                                                      verbose=details,
                                                      n_jobs=n_jobs).fit(x_train, y_train)
                 else:
-                    grid_search = GridSearchCV(StackingRegressor(estimators=list(
-                        model_list.items(),
-                        passthrough=True,
-                        n_jobs=-1,
-                    ),
+                    grid_search = GridSearchCV(StackingRegressor(estimators=list(model_list.items()),
+                                                                 passthrough=True,
+                                                                 n_jobs=-1,
                                                                  cv=5),
                                                auto_custom_parameters,
                                                refit=True,
