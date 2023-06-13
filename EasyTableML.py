@@ -1,6 +1,7 @@
 #Load model
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
+from sklearn.linear_model import LinearRegression
 import lightgbm as lgb_model
 from catboost import CatBoostRegressor, Pool
 from sklearn.ensemble import RandomForestRegressor
@@ -237,9 +238,7 @@ class EasyTableMLRegression():
             else:
                 if auto_custom_parameters == None:
                     meta_learner_L1_1 = StackingRegressor(estimators=list(model_list.items()),
-                                                          final_estimator=MLPRegressor(hidden_layer_sizes=(30, 100, 20),
-                                                                                       alpha=0.1,
-                                                                                       max_iter=5000),
+                                                          final_estimator=LinearRegression(),
                                                           cv=cv,
                                                           passthrough=True,
                                                           verbose=details,
@@ -260,9 +259,7 @@ class EasyTableMLRegression():
                                        ('L1_3', meta_learner_L1_3)]
                     print("Training final META learner...")
                     meta_learner = StackingRegressor(estimators=meta_learner_L1,
-                                                     final_estimator=MLPRegressor(hidden_layer_sizes=(30, 100, 20),
-                                                                                  alpha=1,
-                                                                                  max_iter=5000),
+                                                     final_estimator=LinearRegression(),
                                                      cv=cv,
                                                      verbose=details,
                                                      n_jobs=n_jobs).fit(x_train, y_train)
