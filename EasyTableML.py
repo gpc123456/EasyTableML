@@ -1,6 +1,5 @@
 #Load model
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.neural_network import MLPRegressor
 from sklearn.linear_model import LinearRegression
 import lightgbm as lgb_model
 from catboost import CatBoostRegressor, Pool
