@@ -1,0 +1,5 @@
+scikit-learn == 1.2.2
+lightgbm == 3.3.5
+catboost == 1.1.1
+openfe == 0.0.11
+seaborn == 0.12.2
