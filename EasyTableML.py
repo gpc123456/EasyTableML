@@ -278,7 +278,7 @@ class EasyTableMLRegression():
                 joblib.dump(meta_learner, os.path.join('models', 'AutoML', 'meta_learner.pkl'))
             return meta_learner
 
-    def load_base_model(self, model_list, is_auto_parameter=False):
+    def load_base_model(self, model_list, is_auto_parameter=True):
         if is_auto_parameter == False:
             for i in range(len(model_list)):
                 model_ll = list(model_list.items())
@@ -295,7 +295,7 @@ class EasyTableMLRegression():
             print('Load Done!')
         return model_list
 
-    def load_meta_learner(self, is_auto_parameter=False):
+    def load_meta_learner(self, is_auto_parameter=True):
         if is_auto_parameter == True:
             meta_learner = joblib.load(os.path.join('models', 'AutoML', 'meta_learner.pkl'))
         else:
@@ -364,7 +364,6 @@ class EasyTableMLRegression():
         corrmat = P.corr()
         f, ax = plt.subplots(figsize=(10, 10))
         sns.heatmap(corrmat, square=True, annot=True)
-        return P
 
     def estimate_meta(self, meta_model, x_train, y_train, x_valid, y_valid, details=0):
         print('Estimating Train Set...')
