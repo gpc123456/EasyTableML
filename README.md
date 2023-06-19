@@ -3,7 +3,6 @@
 EasyTableML is an automated machine learning framework suitable for tabular data, which is very convenient to use. You only need 1-2 lines of code to train an excellent machine learning model.  
 
 ## Install  
----
 Step one : Clone this repository using `git clone` or download this repository  
 
 Step two : Using `pip install -r requirements.txt` to install dependencies  
@@ -11,7 +10,6 @@ Step two : Using `pip install -r requirements.txt` to install dependencies
 Step three : Feel free to use 😊  
   
 ## QuickStart
----
 ### Training model
 You can train a machine learning model with your data in just four simple steps:  
 Step one : Import module
