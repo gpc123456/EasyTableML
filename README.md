@@ -11,7 +11,8 @@ Step three : Feel free to use 😊
   
 ## QuickStart
 ### Training model
-You can train a machine learning model with your data in just four simple steps:  
+You can train a machine learning model with your data in just four simple steps: 
+ 
 Step one : Import module
 `import EasyTableML`  
 
