@@ -109,7 +109,7 @@ Returns model dictionary with loaded data `{'model_name':model_object}`
 **Parameters**  
 `is_auto_parameter`:*True* or *False*. If *True*, loads the model saved when using automatic parameter search; If *False*, load the model that was saved when automatic parameter search was not used. The default value is *True*.  
 
-**Return** 
+**Return**  
 Returns metamodel with loaded data.  
 
 ---
