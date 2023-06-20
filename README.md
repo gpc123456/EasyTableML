@@ -85,8 +85,8 @@ Model dictionary `{'model_name':model_object}`
 `auto_parameter`:*True* or *False*. Whether to use automatic parameter search. If it is set to *False*, the automatic parameter search is not performed and the model provided in `model_list` or `meta_model` is used directly for training. If set to *True*, the optimal parameters for the model in `model_list` are searched automatically.  
 
 **Return**  
-If `train_type` is *base*, return the trained model dictionary `{'model_name':model_object}`  
-If `train_type` is *meta*, return metamodel object.  
+If `train_type` is *'base'*, return the trained model dictionary `{'model_name':model_object}`  
+If `train_type` is *'meta'*, return metamodel object.  
 
 ---
 
