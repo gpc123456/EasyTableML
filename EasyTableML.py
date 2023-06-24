@@ -56,7 +56,14 @@ class EasyTableMLRegression():
         models = {'knn': knn, 'lgbm': lgbm, 'catboost': catboost}
         return models
 
-    def auto_parameter_lgbm(self, lbgm_model, x_train, y_train, auto_scoring='r2', cv=5, n_jobs=1, details=1):
+    def auto_parameter_lgbm(self,
+                            lbgm_model,
+                            x_train,
+                            y_train,
+                            auto_scoring='neg_mean_absolute_error',
+                            cv=5,
+                            n_jobs=1,
+                            details=1):
         #Stage one:
         print('Stage 1 of 5')
         parameters_stage_one = {
@@ -136,7 +143,7 @@ class EasyTableMLRegression():
                             model_list,
                             x_train,
                             y_train,
-                            auto_scoring='r2',
+                            auto_scoring='neg_mean_absolute_error',
                             cv=5,
                             custom_parameters=None,
                             n_jobs=1,
@@ -197,7 +204,7 @@ class EasyTableMLRegression():
               cv=5,
               auto_custom_parameters=None,
               n_jobs=1,
-              auto_scoring='r2',
+              auto_scoring='neg_mean_absolute_error',
               details=1,
               auto_parameter=False):
         if train_type == 'base':
@@ -397,7 +404,7 @@ class EasyTableMLRegression():
         y_pred = model.predict(x_pred)
         return y_pred
 
-    def fit(self, x_train, y_train, auto_scoring='r2', cv=5, n_jobs=1, details=1):
+    def fit(self, x_train, y_train, auto_scoring='neg_mean_absolute_error', cv=5, n_jobs=1, details=1):
         print('Start Auto Train! Leave it all to me 😊!')
         base_models = self.get_base_models()
         best_models = self.train(base_models,

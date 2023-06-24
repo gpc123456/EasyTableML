@@ -58,7 +58,7 @@ Model dictionary `{'model_name':model_object}`
 
 ---
 
-#### train(model_list,x_train,y_train,train_type,meta_model=None,cv=5,auto_custom_parameters=None,n_jobs=1,auto_scoring='r2',details=1,auto_parameter=False):  
+#### train(model_list,x_train,y_train,train_type,meta_model=None,cv=5,auto_custom_parameters=None,n_jobs=1,auto_scoring='neg_mean_absolute_error',details=1,auto_parameter=False):  
 **Function**: Training model.  
 
 **Parameters**  
@@ -78,7 +78,7 @@ Model dictionary `{'model_name':model_object}`
 
 `n_jobs`:Resources used during training. It is recommended to set to the number of CPU cores. The default value is *1*  
 
-`auto_scoring`:Model evaluation index in automatic parameter search. This parameter is invalid when `auto_parameter` is set to False. For the value of this parameter, see: https://scikit-learn.org/stable/modules/model_evaluation.html. The default value is *r2*  
+`auto_scoring`:Model evaluation index in automatic parameter search. This parameter is invalid when `auto_parameter` is set to False. For the value of this parameter, see: https://scikit-learn.org/stable/modules/model_evaluation.html. The default value is *neg_mean_absolute_error*  
 
 `details`:The level of detail of the output information.The larger the value, the more detailed the output information. The default value is *1*  
 
@@ -168,7 +168,7 @@ Predicted results. The type is `numpy.array`.
 
 ---  
 
-#### fit(x_train, y_train, auto_scoring='r2', cv=5, n_jobs=1, details=1)  
+#### fit(x_train, y_train, auto_scoring='neg_mean_absolute_error', cv=5, n_jobs=1, details=1)  
 **Function**:One line of code gets the training model.  
 
 **Parameters**  
@@ -176,7 +176,7 @@ Predicted results. The type is `numpy.array`.
 
 `y_train`:Training labels. The type must be *numpy.array*. The shape must be *(labels_number,)*  
 
-`auto_scoring`:Model evaluation index in automatic parameter search. This parameter is invalid when `auto_parameter` is set to False. For the value of this parameter, see: https://scikit-learn.org/stable/modules/model_evaluation.html. The default value is *r2*  
+`auto_scoring`:Model evaluation index in automatic parameter search. This parameter is invalid when `auto_parameter` is set to False. For the value of this parameter, see: https://scikit-learn.org/stable/modules/model_evaluation.html. The default value is *neg_mean_absolute_error*  
 
 `cv`:The number of splits when cross-verifying. The default value is *5*  
 
